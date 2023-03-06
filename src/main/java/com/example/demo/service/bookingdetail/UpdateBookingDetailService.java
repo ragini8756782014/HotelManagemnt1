@@ -39,7 +39,7 @@ public class UpdateBookingDetailService {
 		if (r.isEmpty()) {
 			throw new ValidationException("FV001", "We do not have this category room empty");
 		}
-		updateCustomerService.updateCustomer(bookingDetails.getC(), r);
+		updateCustomerService.updateCustomer(bookingDetails.getC(), r,bookingDetails.getCategoryType());
 		if (dbBookingDetails.isPresent()) {
 			bookingDetailsRepository.save(bookingDetails);
 		}
