@@ -18,37 +18,37 @@ public class UpdateCustomerService {
 
 	int i;
 
-	public void updateCustomer(List<Customer> list, List<RoomReturn> r) {
+	public void updateCustomer(List<Customer> list, List<RoomReturn> r,String CategoryType) {
 		getCustomerIdFromList(list, r);
 	}
 
-	private void getCustomerIdFromList(List<Customer> list, List<RoomReturn> r) {
-		for (Customer c : list) {
-			Optional<Customer> customer = customerRepository.findById(c.getCustomerid());
-			if (customer.isPresent()) {
-
-				if (list.size() == r.size()) {
-
-					c.setRoomNo(getRoomNoForCustomer(r));
-					customerRepository.save(c);
-				} else {
-					if (i == r.size()) {
-						i = 0;
-					}
-					c.setRoomNo(getRoomNoForCustomer(r));
-					customerRepository.save(c);
-				}
-			}
-		}
+	private void getCustomerIdFromList(List<Customer> list, List<RoomReturn> r,String CategoryType) {
+		for(int i=0;i<list.size();i++)
+		{
+			int roomIndex= getRoomIndex(  i , CategoryType);
+			Customer c=list.get(i);
+			c.setRoomNo(r.get(roomIndex).getRoomNo());
+			customerRepository.save(c);
+		}	
 	}
 
-	private int getRoomNoForCustomer(List<RoomReturn> r) {
-		int roomNo = 0;
-		for (i = 0; i < r.size(); i++) {
-
-			roomNo = r.get(i).getRoomNo();
+	private int  getRoomIndex( int i ,String CategoryType) {
+		int roomIndex;
+		switch (CategoryType) {
+		case "Single Bed": 
+			roomIndex=i;
+		        break;		        
+		case "Double Bed":
+			roomIndex=i/2;
+			break;			
+		case "Triple Bed":
+			roomIndex=i/3;
+			break;
+		
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + CategoryType);
 		}
-		return roomNo;
+		return roomIndex;
 	}
 
 //	private void validate(List<Customer> list) {
