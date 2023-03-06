@@ -16,7 +16,7 @@ public class CreateCustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
-	int i,j;
+	
 
 	public void createCustomer(List<Customer> list, List<RoomReturn> r,String CategoryType) {
 		validate(list);
