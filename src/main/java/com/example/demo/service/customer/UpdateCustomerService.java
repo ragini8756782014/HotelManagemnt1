@@ -19,7 +19,7 @@ public class UpdateCustomerService {
 	int i;
 
 	public void updateCustomer(List<Customer> list, List<RoomReturn> r,String CategoryType) {
-		getCustomerIdFromList(list, r);
+		getCustomerIdFromList(list, r,CategoryType);
 	}
 
 	private void getCustomerIdFromList(List<Customer> list, List<RoomReturn> r,String CategoryType) {
