@@ -39,30 +39,36 @@ public class RoomsController {
 
 	@Autowired
 	private UpdateRoomService updateRoomService;
+	
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BookingDetailsController.class);
 
 	@PostMapping("/room")
 	public ResponseEntity<BaseResponse> createRoom(@RequestBody Rooms rooms) {
+		logger.info("creating new rooms ");
 		return  new ResponseEntity<>(createRoomService.createRoom(rooms), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/room")
 	public ResponseEntity<List<Rooms>> getRoom() {
+		logger.info("getting all rooms");
 		return new ResponseEntity<>(getAllRoomService.getRoom(), HttpStatus.OK);
 	}
 
 	@GetMapping("/room/{id}")
 	public ResponseEntity<Optional<Rooms>> getRoomById(@PathVariable("id") Long id) {
+		logger.info("getting rooms using room id ");
 		return new ResponseEntity<>(getAllRoomByIdService.getRoomById(id), HttpStatus.FOUND);
 	}
 
 	@DeleteMapping("/room/{id}")
 	public ResponseEntity<BaseResponse> deleteRoom(@PathVariable("id") Long id) {
+		logger.info("deleting room using room id");
 		return new ResponseEntity<>(deleteRoomService.deleteRoom(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/room")
 	public ResponseEntity<BaseResponse> updateRooms(@RequestBody Rooms rooms) {
+		logger.info("updating all details of room ");
 		return new ResponseEntity<>(updateRoomService.updateRoom(rooms), HttpStatus.OK);
 	}
-
 }
