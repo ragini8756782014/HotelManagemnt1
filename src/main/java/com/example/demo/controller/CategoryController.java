@@ -36,29 +36,36 @@ public class CategoryController {
 	@Autowired
 	private UpdateCategoryService updateCategoryService;
 
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BookingDetailsController.class);
+
 	@PostMapping("/category")
 	public ResponseEntity<BaseResponse> createCategory(@RequestBody Category category) {
+		logger.info("saving category in database ");
 		return new ResponseEntity<>(createCategoryService.addCategory(category), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/category")
 	public ResponseEntity<List<Category>> getCategory() {
+		logger.info("getting all category type data  ");
 		return new ResponseEntity<>(getAllCategoryService.getAllCategory(), HttpStatus.OK);
 	}
 
 	@GetMapping("/category/{id}")
 	public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable("id") Long id) {
+		logger.info("getting category using category id ");
 		return new ResponseEntity<>(getCategoryByIdService.getCategoryById(id), HttpStatus.FOUND);
 	}
 
 	@DeleteMapping("/category/{id}")
 	public ResponseEntity<BaseResponse> deleteCategory(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(deleteCategoryService.deleteCategory(id),HttpStatus.OK);
+		logger.info("deleting category using id");
+		return new ResponseEntity<>(deleteCategoryService.deleteCategory(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/category")
 	public ResponseEntity<BaseResponse> updateCategory(@RequestBody Category category) {
-		return new ResponseEntity<>(updateCategoryService.updateCategory(category),HttpStatus.OK);
+		logger.info("updating all data of category ");
+		return new ResponseEntity<>(updateCategoryService.updateCategory(category), HttpStatus.OK);
 	}
 
 }
