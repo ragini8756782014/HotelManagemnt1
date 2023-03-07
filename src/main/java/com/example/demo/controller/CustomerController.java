@@ -22,23 +22,27 @@ public class CustomerController {
 	@Autowired
 	private GetAllCustomerService getAllCustomerService;
 	@Autowired
-	private GetCustomerUsingBookingIdService  getCustomerUsingBookingIdService ;
+	private GetCustomerUsingBookingIdService getCustomerUsingBookingIdService;
 	@Autowired
 	private GetCustomerByIdService getCustomerByIdService;
 
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BookingDetailsController.class);
+
 	@GetMapping("/customers")
 	public ResponseEntity<List<Customer>> getAllCustomer() {
+		logger.info("getting all customer details ");
 		return new ResponseEntity<>(getAllCustomerService.getAllCustomer(), HttpStatus.OK);
 	}
 
 	@GetMapping("/customersUsingBookingId/{id}")
-	public  ResponseEntity<List<Customer>> findCustomerUsingBookingId(@PathVariable("id") Long id){
+	public ResponseEntity<List<Customer>> findCustomerUsingBookingId(@PathVariable("id") Long id) {
+		logger.info("getting customer details using booking id");
 		return new ResponseEntity<>(getCustomerUsingBookingIdService.getCustomerUsingBookingId(id), HttpStatus.OK);
 	}
-	
-	
+
 	@GetMapping("/customers/{id}")
-	public  ResponseEntity<Optional<Customer>> findCustomerById(@PathVariable("id") Long id){
-		return new ResponseEntity<>( getCustomerByIdService.getCustomerById(id), HttpStatus.OK);
+	public ResponseEntity<Optional<Customer>> findCustomerById(@PathVariable("id") Long id) {
+		logger.info("getting customer details using customer id");
+		return new ResponseEntity<>(getCustomerByIdService.getCustomerById(id), HttpStatus.OK);
 	}
 }
