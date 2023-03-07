@@ -48,60 +48,71 @@ public class BookingDetailsController {
 	@Autowired
 	private GetBookingDetailsUsingDateService getBookingDetailsBeweenDatesService;
 
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BookingDetailsController.class);
+
 	@PostMapping("/bookingDetails")
 	public ResponseEntity<BookingDetailsReturn> createBookingDetails(@RequestBody BookingDetails bookingDetails) {
-
+		logger.info("saving booking details ");
 		return new ResponseEntity<>(createBookingDetailService.createBookingDetail(bookingDetails), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/bookingDetails")
 	public ResponseEntity<List<BookingDetails>> getAllBookingDetails() {
-
-		return new ResponseEntity<>(getAllBookingDetailsService.getAllBookingDetails(),HttpStatus.OK);
+		logger.info("getting list of all bookingDetails");
+		return new ResponseEntity<>(getAllBookingDetailsService.getAllBookingDetails(), HttpStatus.OK);
 	}
 
 	@GetMapping("/bookingDetails/{id}")
 	public ResponseEntity<Optional<BookingDetails>> getBookingDetailsById(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(getBookingDetailByIdService.getBookingDetailsById(id),HttpStatus.OK);
+		logger.info("getting booking detail using id");
+		return new ResponseEntity<>(getBookingDetailByIdService.getBookingDetailsById(id), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/bookingDetails/{id}/{roomNo}")
 	public ResponseEntity<BaseResponse> deleteBookingDetails(@PathVariable("id") Long id,
 			@PathVariable("roomNo") int roomNo) {
-		return new ResponseEntity<>(deleteBookingDetailsService.deleteBookingDetails(id, roomNo),HttpStatus.FOUND);
+		logger.info("deleteing bookingdetails using booking id");
+		return new ResponseEntity<>(deleteBookingDetailsService.deleteBookingDetails(id, roomNo), HttpStatus.FOUND);
 	}
 
-	
-//	when you have to chnage room then use this to update your booking 
+//	when you have to change room then use this to update your booking 
 	@PutMapping("/bookingDetails")
 	public ResponseEntity<BookingDetailsReturn> updateBookingDetails(@RequestBody BookingDetails bookingDetails) {
-		return new ResponseEntity<>(updateBookingDetailService.updateBookingDetails(bookingDetails),HttpStatus.OK);
+		logger.info("updaing all details of bookingdetail using put mapping ");
+		return new ResponseEntity<>(updateBookingDetailService.updateBookingDetails(bookingDetails), HttpStatus.OK);
 	}
 
-	
-//	when you want to update customer and other data in booikingdetails then use this method
+//	when you want to update customer and other data in bookingdetails then use this method
 	@PatchMapping("/bookingDetails")
 	public ResponseEntity<BaseResponse> updateBookingDetailsUsingPatch(@PathVariable("id") Long id,
 			@RequestBody Map<String, Object> fields) {
-		return new ResponseEntity<>(updateBookingDetailService.updateBookingDetailsUsingPatch(id, fields),HttpStatus.OK);
+		logger.info("updating few details of booking Details using patch mapping ");
+		return new ResponseEntity<>(updateBookingDetailService.updateBookingDetailsUsingPatch(id, fields),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/bookingDetailsbetween/{startDate}/{endDate}")
 	public ResponseEntity<List<BookingDetails>> getBookingDetailsBetweenDates(
 			@PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
-		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsBetween(startDate, endDate),HttpStatus.OK);
+		logger.info("getting bookingDetails between two dates ");
+		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsBetween(startDate, endDate),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/bookingDetailsbefore/{startDate}")
 	public ResponseEntity<List<BookingDetails>> getBookingDetailsBeforeDate(
 			@PathVariable("startDate") String startDate) {
-		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsBeforeDate(startDate),HttpStatus.OK);
+		logger.info("getting bookingDetails of before a given date ");
+		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsBeforeDate(startDate),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/bookingDetailsyear/{startDate}")
 	public ResponseEntity<List<BookingDetails>> getBookingDetailsUsingYear(@PathVariable("startDate") String startDate)
 			throws ParseException {
-		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsUsingYear(startDate),HttpStatus.OK.OK);
+		logger.info("getting booking details using year");
+		return new ResponseEntity<>(getBookingDetailsBeweenDatesService.getBookingDetailsUsingYear(startDate),
+				HttpStatus.OK);
 	}
 
 }
